@@ -65,7 +65,7 @@ diagnose(program_baslamiyor) :-
     ask('Kapak tam kapali mi?', yes),
     ask('Ekranda hata kodu gorunuyor mu?', yes).
 
-diagnose(su_tasimasi) :-
+diagnose(su_tasmasi) :-
     ask('Makine su almaya devam ediyor mu?', yes),
     ask('Su seviyesi normalden fazla mi?', yes),
     ask('Program durmuyor mu?', yes),
@@ -138,7 +138,7 @@ diagnose(tambur_surtunmesi) :-
     ask('Makinede fiziksel hasar var mi?', yes).
 
 
-solution(guç_yok, 'Fis, priz ve sigortayi kontrol edin. Elektrik geldiginden emin olun.').
+solution(guc_yok, 'Fis, priz ve sigortayi kontrol edin. Elektrik geldiginden emin olun.').
 solution(su_bosaltmiyor, 'Filtreyi temizleyin ve tahliye hortumunu kontrol edin.').
 solution(sikma_kapak_sorunu, 'Kapak tam kapanmamis olabilir. Kapagi kontrol edin.').
 solution(sikma_yuk_sorunu, 'Dengesiz veya fazla yuk. Yukleri yeniden yerlestirin.').
@@ -149,7 +149,7 @@ solution(su_isitmiyor, 'Isitici rezistansi veya sicaklik sensoru arizali olabili
 solution(tambur_donmuyor, 'Tambur kayisi kopmus olabilir. Teknik servise basvurun.').
 solution(cok_titreme, 'Makineyi dengeleyin. Ayaklarini ayarlayin ve camasirlari dengeli yerlestirin.').
 solution(program_baslamiyor, 'Elektronik kart arizali olabilir. Teknik servis gereklidir.').
-solution(su_tasimasi, 'Su seviye sensoru veya vana arizali olabilir.').
+solution(su_tasmasi, 'Su seviye sensoru veya vana arizali olabilir.').
 solution(kotu_koku, 'Makineyi 90 derece sicaklikta bos calistirin. Filtre ve deterjan cekmecesini temizleyin.').
 solution(kapak_kilidi_sorunu, 'Kapak tam kapanmamis olabilir. Kilit mekanizmasini kontrol edin.').
 solution(kontrol_paneli_cevap_vermiyor, 'Elektrik baglantisini kontrol edin. Panel arizali olabilir.').

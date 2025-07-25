@@ -3,7 +3,7 @@ from flask_cors import CORS
 from pyswip import Prolog
 import html
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})  # ← burası değişti
+CORS(app, resources={r"/*": {"origins": "*"}}) 
 
 prolog = Prolog()
 prolog.consult("logic.pl")
@@ -108,7 +108,7 @@ diagnosis_groups = [
         ]
     },
     {
-        "fault": "su_tasimasi",
+        "fault": "su_tasmasi",
         "questions": [
             {"text": "Makine su almaya devam ediyor mu?", "expected": "yes"},
             {"text": "Su seviyesi normalden fazla mi?", "expected": "yes"},
@@ -247,7 +247,7 @@ def answer():
     while group_index < len(diagnosis_groups):
         group = diagnosis_groups[group_index]
         if question_index >= len(group["questions"]):
-            # Tüm sorular doğru cevaplandıysa teşhis tamam
+          
             fault = group["fault"]
             current_diagnosis = fault
             result = list(prolog.query(f"solution({fault}, Explanation)."))
@@ -264,22 +264,31 @@ def answer():
         question_text = current_question_obj["text"]
         expected = current_question_obj["expected"]
 
-        # Cevap uyuşmuyorsa grup atla
+       
         if ans != expected:
             group_index += 1
             question_index = 0
-            return (
-                jsonify({"question": diagnosis_groups[group_index]["questions"][0]["text"], "done": False})
-                if group_index < len(diagnosis_groups)
-                else jsonify({"message": "Arıza tespit edilemedi.", "done": True})
-            )
+            if group_index < len(diagnosis_groups):
+                return jsonify({"question": diagnosis_groups[group_index]["questions"][0]["text"], "done": False})
+            else:
+                current_diagnosis = None
+                awaiting_district = True
+                return jsonify({
+                    "diagnosis": None,
+                    "solution": "Herhangi bir arıza tespit edilemedi.",
+                    "ask_district": True,
+                    "done": False
+                })
 
-        # Cevap doğruysa, Prolog’a yine ekle (gerekirse geçmişe yönelik açıklamada kullanabiliriz)
+
+            
+
+       
         safe_question = question_text.replace("'", "\\'")
         prolog.assertz(f"ask('{safe_question}', {ans})")
         question_index += 1
 
-        # Devam sorusu varsa gönder
+      
         if question_index < len(group["questions"]):
             return jsonify({
                 "question": group["questions"][question_index]["text"],
